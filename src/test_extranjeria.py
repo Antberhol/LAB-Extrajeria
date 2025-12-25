@@ -24,11 +24,24 @@ def test_top_n_extranjeria():
     registros = lee_extranjeria(ruta_fichero)
     resultado = top_n_extranjeria(registros, n=5)
     print("Top 5 países con más extranjeros:", resultado)
+def test_barrio_mas_cultural():
+    ruta_fichero = "data/extranjeriaSevilla.csv"
+    registros = lee_extranjeria(ruta_fichero)
+    resultado = barrio_mas_multicultural(registros)
+    print("Barrio más multicultural:", resultado)
+    
+def test_barrio_mas_extranjeros():
+    ruta_fichero = "data/extranjeriaSevilla.csv"
+    registros = lee_extranjeria(ruta_fichero)
+    resultado = barrio_con_mas_Extranjeros(registros, None)
+    print("Barrio con más extranjeros:", resultado)
 def main():
     #  test_lee_extranjeria()
     #test_secciones_distritos_con_extranjeros_nacionalidades()
     #test_total_extranjeros_por_pais()
-    test_top_n_extranjeria()
+    #test_top_n_extranjeria()
+    #test_barrio_mas_cultural()
+    test_barrio_mas_extranjeros()
     
 if __name__ == "__main__":
     main()

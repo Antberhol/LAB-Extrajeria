@@ -99,4 +99,54 @@ def top_n_extranjeria(registros:List[RegistroExtranjeria], n:int=3) -> List[tupl
     ordenado = sorted(diccionario_paises.items(), key=lambda x: x[1], reverse=True)
     return ordenado[:n]
 
+
+"""
+ 6. **barrio_mas_multicultural(registros)**: recibe una lista de tuplas de tipo RegistroExtranjeria y
+devuelvevel  nombre  del  barrio  en  el  que hay un mayor número de países de procedencia distintos.
+"""
+def barrio_mas_multicultural(registros: list[RegistroExtranjeria])-> str:
+    barrio_paises = defaultdict(set)
+    tamaños = {}
+    for registro in registros: 
+        barrio_paises[registro.barrio].add(registro.pais)
+    for barrio, paises in barrio_paises.items():
+        tamaños[barrio] = len(paises)
+    return max(tamaños.items(), key=lambda x:x[1])[0]  
+    
+    
+"""
+7. **barrio_con_mas_extranjeros(registros, tipo=None)**: recibe una lista de tuplas de tipo 
+RegistroExtranjeria y devuelve el nombre del barrio en el que hay un mayor número de extranjeros,
+bien sea en total (tanto hombres como mujeres) si `tipo`
+tiene el valor `None`, bien sea de hombres si `tipo` es `'Hombres'`, o de mujeres si `tipo` es `'Mujeres'`.
+    """
+def barrio_con_mas_Extranjeros(registros: list[RegistroExtranjeria], tipo: str |None) -> str:
+    extranjeros = defaultdict(int)
+    for registro in registros:
+        if tipo is None:
+            extranjeros[registro.barrio] += registro.hombres + registro.mujeres
+        elif tipo =="Hombres":
+            extranjeros[registro.barrio] += registro.hombres    
+        elif tipo =="Mujeres":
+            extranjeros[registro.barrio] += registro.mujeres
+    return max(extranjeros.items(), key=lambda x:x[1])[0]
+
+
+
+"""    
+pais_mas_representado_por_distrito(registros): recibe una lista de tuplas de 
+tipo RegistroExtranjeria y devuelve un diccionario de tipo `{str:str}` en el que
+las claves son los distritos y los 
+valores los países de los que hay más extranjeros residentes en cada distrito.
+"""
+
+def pais_mas_representado_por_distrito(registros: list[RegistroExtranjeria]) -> dict[str, str]:
+    distritos = defaultdict(dict)
+    resultado = {}
+    for registro in registros:
+        distritos[registro.distrito][registro.pais] = registro.hombres + registro.mujeres
         
+    for distrito, paises in distritos.items():
+        pais_mas_representado = max(paises.items(), key = lambda x:x[1])[0]
+        resultado[distrito] = pais_mas_representado
+    return resultado
